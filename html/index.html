@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../css/style2.css" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+      integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <title>My日記</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <h1>My diary ログイン画面</h1>
+      <div>
+        <h2><i class="far fa-envelope"></i>Mail</h2>
+        <input id="mailAddress" type="mailAddress" required />
+      </div>
+      <div>
+        <h2><i class="fas fa-unlock-alt"></i>password</h2>
+        <input id="password" type="password" required />
+      </div>
+      <button id="login">ログイン</button>
+      <button id="register">新規登録</button>
+    </div>
+    　
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "",
+        authDomain: "",
+        databaseURL: "",
+        projectId: "",
+        storageBucket: "",
+        messagingSenderId: "",
+        appId: "",
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      //firebaseのデーターベース（保存させる場所）を使いますよと言うjsのコードを貼り付ける
+      // xxxxxスクリプトを貼り付ける
+      const newPostRef = firebase.database().ref();
+      // ここから下にjqueryの処理を書いて練習します
+      //新規登録処理
+      register.addEventListener("click", function (e) {
+        var mailAddress = document.getElementById("mailAddress").value;
+        var password = document.getElementById("password").value;
+
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(mailAddress, password)
+          .catch(function (error) {
+            alert("登録できません（" + error.message + "）");
+          });
+      });
+      //ログイン処理
+      $("#login").on("click", function (e) {
+        var mailAddress = document.getElementById("mailAddress").value;
+        var password = document.getElementById("password").value;
+        location.href = "success.html";
+
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(mailAddress, password)
+          .catch(function (error) {
+            alert("ログインできません（" + error.message + "）");
+            location.href = "index.html";
+          });
+      });
+    </script>
+  </body>
+</html>
